@@ -48,11 +48,11 @@ function checkAuthenticated(req, res, next){
 
 // Routes
 app.get('/', (req, res) => {
-    res.redirect('/login');
+    res.redirect('/index');
 });
 
-app.get('/login', (req, res) => {
-    res.sendFile('login.html', { root: path.join(__dirname, 'views')});
+app.get('/index', (req, res) => {
+    res.sendFile('index.html', { root: path.join(__dirname, 'views')});
 });
 
 app.get('/register', (req, res) => {
@@ -84,7 +84,7 @@ app.get('/logout', (req, res) => {
             return res.redirect('/dashboard');
         }
         res.clearCookie('connect.sid');
-        res.redirect('/login');
+        res.redirect('/index');
     });
 });
 
@@ -96,11 +96,11 @@ app.post('/register', async (req, res) => {
     const newUser = new User({ name, email, password:hashedpassword });
     await newUser.save();
 
-    res.redirect('/login');
+    res.redirect('/index');
 });
 
 // login
-app.post('/login', async (req, res) => {
+app.post('/index', async (req, res) => {
     const { name, password } = req.body;
     const user = await User.findOne({ name });
 
