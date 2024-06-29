@@ -48,11 +48,11 @@ function checkAuthenticated(req, res, next){
 
 // Routes
 app.get('/', (req, res) => {
-    res.redirect('/index');
+    res.redirect('/login');
 });
 
-app.get('/index', (req, res) => {
-    res.sendFile('index.html', { root: path.join(__dirname, 'views')});
+app.get('/login', (req, res) => {
+    res.sendFile('login.html', { root: path.join(__dirname, 'views')});
 });
 
 app.get('/register', (req, res) => {
@@ -75,6 +75,9 @@ app.get('/aboutlogin', (req, res) => {
 app.get('/contactlogin', (req, res) => {
     res.sendFile('contactlogin.html', { root: path.join(__dirname, 'views')});
 });
+app.get('/index', (req, res) => {
+    res.sendFile('login.html', { root: path.join(__dirname, root)});
+});
 
 
 //Logout
@@ -84,7 +87,7 @@ app.get('/logout', (req, res) => {
             return res.redirect('/dashboard');
         }
         res.clearCookie('connect.sid');
-        res.redirect('/index');
+        res.redirect('/login');
     });
 });
 
@@ -96,11 +99,11 @@ app.post('/register', async (req, res) => {
     const newUser = new User({ name, email, password:hashedpassword });
     await newUser.save();
 
-    res.redirect('/index');
+    res.redirect('/login');
 });
 
 // login
-app.post('/index', async (req, res) => {
+app.post('/login', async (req, res) => {
     const { name, password } = req.body;
     const user = await User.findOne({ name });
 
